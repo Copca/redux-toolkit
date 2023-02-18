@@ -6,11 +6,13 @@ import { RootState } from '../store';
 // Define a type for the slice state
 interface CounterState {
 	counter: number;
+	times: number;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
-	counter: 10
+	counter: 10,
+	times: 0
 };
 
 export const counterSlice = createSlice({
