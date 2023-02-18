@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hook';
 
 import { decrement, increment, incrementByAmount } from '@/store/counter';
+import { getPokemons } from '@/store/pokemon';
 
 const HomePage = () => {
 	const { counter } = useAppSelector((state) => state.counter);
+	const { page, pokemons, isLoading } = useAppSelector((state) => state.pokemons);
 	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(getPokemons());
+	}, [dispatch]);
 
 	return (
 		<div>
@@ -21,6 +28,19 @@ const HomePage = () => {
 			<hr />
 
 			<h2>Pokemon</h2>
+
+			<p>Página: {page}</p>
+			<span>Loading: {isLoading ? 'True' : 'False'} </span>
+
+			<ul>
+				{pokemons.map(({ name }) => (
+					<li key={name}>{name}</li>
+				))}
+			</ul>
+
+			<button disabled={isLoading} onClick={() => dispatch(getPokemons(page))}>
+				Next
+			</button>
 		</div>
 	);
 };
